@@ -18,6 +18,7 @@ import ApplicationList from './features/applications/ApplicationList'
 import ApplicationForm from './features/applications/ApplicationForm'
 import ApplicationDetail from './features/applications/ApplicationDetail'
 import AppointmentList from './features/scheduling/AppointmentList'
+import AppointmentDetail from './features/scheduling/AppointmentDetail'
 import InspectionForm from './features/inspections/InspectionForm'
 import InspectionList from './features/inspections/InspectionList'
 import CertificateDetail from './features/certificates/CertificateDetail'
@@ -124,6 +125,11 @@ function App() {
         <Route path="/appointments" element={
           <ProtectedRoute allowedRoles={['owner', 'lmo', 'gatc', 'regulator', 'admin']}>
             <AppointmentList />
+          </ProtectedRoute>
+        } />
+        <Route path="/appointments/:id" element={
+          <ProtectedRoute allowedRoles={['owner', 'lmo', 'gatc', 'regulator', 'admin']}>
+            <AppointmentDetail />
           </ProtectedRoute>
         } />
         <Route path="/inspections" element={

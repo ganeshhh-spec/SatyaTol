@@ -124,3 +124,18 @@ class TestScrutinyAndScheduling:
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["status"] == "scheduled"
+
+        # Verify retrieving single appointment via GET /api/v1/appointments/{id}
+        appt = db.query(Appointment).filter(Appointment.application_id == test_application.id).first()
+        assert appt is not None
+
+        appt_response = client.get(f"/api/v1/appointments/{appt.id}", headers=lmo_headers)
+        assert appt_response.status_code == status.HTTP_200_OK
+        appt_data = appt_response.json()
+        assert appt_data["id"] == appt.id
+        assert appt_data["application_id"] == test_application.id
+        assert appt_data["location"] == "Central Market Stall 45"
+
+        # Verify 404 for non-existent appointment
+        not_found_response = client.get("/api/v1/appointments/99999", headers=lmo_headers)
+        assert not_found_response.status_code == status.HTTP_404_NOT_FOUND
