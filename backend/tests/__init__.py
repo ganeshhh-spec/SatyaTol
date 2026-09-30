@@ -1,0 +1,1 @@
+"""SatyaTol Test Suite package."""
